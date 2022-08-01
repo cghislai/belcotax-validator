@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.charlyghislain</groupId>
+    <artifactId>belcotax-validator-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>belcotax-2021-validation</module>
+        <module>belcotax-validator</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <root.dir>${project.basedir}</root.dir>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>belcotax-repo</id>
+            <url>file://${root.dir}/repo</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--  mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=path/to/belcotax-standalone-2021-1.8.jar -DgroupId=be.fgov.minfin.belcotax -DartifactId=belcotax-standalone-2021 -Dversion=2021.1.8   -Dpackaging=jar -DlocalRepositoryPath=./repo -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.22</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>
