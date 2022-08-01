@@ -23,7 +23,7 @@ pipeline {
             }
             steps {
                 script {
-                    env.MVN_ARGS = "-Pthorntail"
+                    env.MVN_ARGS = ""
                     env.MVN_GOALS = "clean package"
                     env.DO_DEPLOY = false
                     if (params.ALT_DEPLOYMENT_REPOSITORY != '') {
@@ -42,7 +42,7 @@ pipeline {
                     sh 'gpg --allow-secret-key-import --import $GPGKEY'
                     sh "echo \"${params.GPG_KEY_FINGERPRINT}:6:\" | gpg --import-ownertrust"
                 }
-                withMaven(maven: 'maven', mavenSettingsConfig: 'ossrh-settings-xml', jdk: 'jdk11') {
+                withMaven(maven: 'maven', mavenSettingsConfig: 'ossrh-cghislai-settings-xml', jdk: 'jdk11') {
                     sh "mvn $MVN_ARGS $MVN_GOALS"
                 }
             }
