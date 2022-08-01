@@ -48,6 +48,7 @@
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <!--                            <shadedArtifactId>belcotax-2021-validation-shaded</shadedArtifactId>-->
                             <shadedClassifierName>shaded</shadedClassifierName>
+                            <shadeSourcesContent>true</shadeSourcesContent>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
