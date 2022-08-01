@@ -3,6 +3,9 @@
 This project contains the belcotax validator extracted from the standalone jws applet (*sigh*), packaged in a way that makes it
 usable in any java project.
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.charlyghislain.belcotax/belcotax-validator)](https://search.maven.org/search?q=g:com.charlyghislain.belcotax%20a:belcotax-validator)
+
+
 The aim is to update this project to support validating the current 1 or 2 fiscal years. Feel free to open an issue whenever a new 'validation module'
 is released on financien.belgium.be.
 
@@ -36,12 +39,14 @@ BelcotaxValidationOptions validationOptions=BelcotaxValidationOptions.builder()
         .senderSsin(/*... */)
         .errorLocale(Locale.FRENCH)
         .build();
-ValidatedBelcotax validatedBelcotax=BelcotaxValidator.validateBelcoTaxXml(fiscalYear, xmlContentStream, validationOptions);
+ValidatedBelcotax validatedBelcotax = BelcotaxValidator.validateBelcoTaxXml(
+        fiscalYear, xmlContentStream, validationOptions
+);
 ```
 
 3. Handle the errors, write the bow file
 
-```
+```java
 List<BelcotaxValidationError> blockingErrors = validatedBelcotax.getBlockingErrors();
 if (blockingErrors.isEmpty()) {
   try (
