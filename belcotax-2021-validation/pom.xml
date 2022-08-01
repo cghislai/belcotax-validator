@@ -24,6 +24,11 @@
             <artifactId>belcotax-standalone-2021</artifactId>
             <version>2021.1.8</version>
         </dependency>
+        <dependency>
+            <groupId>com.charlyghislain</groupId>
+            <artifactId>belcotax-validation-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
@@ -50,6 +55,7 @@
                                     <shadedPattern>belcotax2021/</shadedPattern>
                                     <excludes>
                                         <exclude>java.**</exclude>
+                                        <exclude>com.charlyghislain.**</exclude>
                                     </excludes>
                                 </relocation>
                             </relocations>

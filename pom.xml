@@ -11,6 +11,7 @@
     <modules>
         <module>belcotax-2021-validation</module>
         <module>belcotax-validator</module>
+        <module>belcotax-validation-util</module>
     </modules>
 
     <properties>
