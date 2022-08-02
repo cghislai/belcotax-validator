@@ -17,11 +17,9 @@ import com.charlyghislain.belcotax.util.BelcotaxValidationError;
 import com.charlyghislain.belcotax.util.BelcotaxValidationException;
 import com.charlyghislain.belcotax.util.BelcotaxValidationOptions;
 import com.charlyghislain.belcotax.util.ValidatedBelcotax;
-import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +29,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class Belcotax2021Validator {
+class Belcotax2021Validator {
 
     public static ValidatedBelcotax validatedBelcotaxXml(InputStream xmlContentStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
         try (
@@ -62,9 +60,10 @@ public class Belcotax2021Validator {
             mapper.setSchemaLocation(null);
             mapper.parse(firstPassInputStream);
             zip.write(xmlContentBytes);
-
             zip.closeEntry();
             zip.flush();
+            cronoConversion.stop();
+
             zip.putNextEntry(new ZipEntry("statistic.properties"));
             zip.write("applet.name=CCFF_SP7_FlatFileConversionApplet\n".getBytes());
             zip.write(("applet.version=" + Environment.APPLET_VERSION + "\n").getBytes());
@@ -101,11 +100,9 @@ public class Belcotax2021Validator {
             validatedBelcotax.setFiscalYear(2021);
 
             return validatedBelcotax;
-        } catch (IOException | SAXException e) {
+        } catch (Exception e) {
             throw new BelcotaxValidationException(e);
         }
-
-
     }
 
     private static BelcotaxValidationError convertError(Object o, Locale errorsLocale) {

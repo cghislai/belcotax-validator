@@ -37,6 +37,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -44,21 +45,63 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <minimizeJar>false</minimizeJar>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <!--                            <shadedArtifactId>belcotax-2021-validation-shaded</shadedArtifactId>-->
                             <shadedClassifierName>shaded</shadedClassifierName>
                             <shadeSourcesContent>true</shadeSourcesContent>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <createDependencyReducedPom>true</createDependencyReducedPom>
+                            <useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>
+                            <artifactSet>
+                                <includes>
+                                    <include>be.fgov.minfin.belcotax:*</include>
+                                </includes>
+                            </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern></pattern>
                                     <shadedPattern>belcotax2021/</shadedPattern>
+                                    <includes>
+                                        <include>be.**</include>
+                                        <include>bindings.**</include>
+                                        <include>netscape.**</include>
+                                        <include>org.**</include>
+                                        <include>schemas.**</include>
+                                        <include>sun.**</include>
+                                        <include>sunw.**</include>
+<!--                                        <include>**.properties</include>-->
+<!--                                        <include>**.xml</include>-->
+<!--                                        <include>**.xsd</include>-->
+<!--                                        <include>**.dtd</include>-->
+<!--                                        <include>**.html</include>-->
+                                    </includes>
                                     <excludes>
-                                        <exclude>java.**</exclude>
-                                        <exclude>com.charlyghislain.belcotax.**</exclude>
+                                        <exclude>org.xml.sax.**</exclude>
+<!--                                        <exclude>\.properties</exclude>-->
+<!--                                        <exclude>\.xsd</exclude>-->
+                                        <exclude>data.xml</exclude>
+                                        <exclude>statistic.properties</exclude>
                                     </excludes>
                                 </relocation>
                             </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>be.fgov.minfin.belcotax:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/MANIFEST*</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                                    <file>be/fgov/minfin/ccff/belcotax/validation2/validator/resources/validator-rules.xml</file>
+                                    <resource>validator-rules.xml</resource>
+                                </transformer>
+                            </transformers>
                         </configuration>
                     </execution>
                 </executions>
@@ -66,6 +109,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>compile</id>
