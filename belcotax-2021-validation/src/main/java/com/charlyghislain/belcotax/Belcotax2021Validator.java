@@ -1,3 +1,5 @@
+package com.charlyghislain.belcotax;
+
 import be.fgov.minfin.ccff.belcotax.input.xml.VerzendingRecord;
 import be.fgov.minfin.ccff.belcotax.input.xml.VerzendingenMapper;
 import be.fgov.minfin.ccff.belcotax.output.NullDataStore;

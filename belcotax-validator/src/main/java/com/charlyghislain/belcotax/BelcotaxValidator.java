@@ -26,10 +26,10 @@ public class BelcotaxValidator {
      * @return A ValidatedBecotax instance, containing the validated '.bow' file content and the validation warnings/errors
      * @throws BelcotaxValidationException when an error prevented the validation to occur
      */
-    public static ValidatedBelcotax validateBelcoTaxXml(int fiscalYear, InputStream xmlInputStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
+    public static ValidatedBelcotax validateBelcotaxXml(int fiscalYear, InputStream xmlInputStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
         switch (fiscalYear) {
             case 2021: {
-                return belcotax2021.Belcotax2021Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
+                return Belcotax2021Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
             }
             default:
                 throw new BelcotaxValidationException("Fiscal year " + fiscalYear + " not yet supported");
