@@ -5,6 +5,7 @@ import be.fgov.minfin.ccff.belcotax.input.xml.VerzendingenMapper;
 import be.fgov.minfin.ccff.belcotax.output.NullDataStore;
 import be.fgov.minfin.ccff.belcotax.output.untyped.UntypedValidatorDataStore;
 import be.fgov.minfin.ccff.belcotax.util.CryptOutputStream;
+import be.fgov.minfin.ccff.belcotax.validation2.error.AbstractError;
 import be.fgov.minfin.ccff.belcotax.validation2.error.AbstractValidationError;
 import be.fgov.minfin.ccff.belcotax.validation2.error.BowErrorHandler;
 import be.fgov.minfin.ccff.belcotax.validation2.error.BypassableErrorsActivated;
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -76,9 +78,9 @@ class Belcotax2021Validator {
             byte[] outputBytes = outputStream.toByteArray();
             ByteArrayInputStream bowContentBytes = new ByteArrayInputStream(outputBytes);
 
-            Collection<? extends AbstractValidationError> blockingErrors = errorHandler.getBlockingErrors();
-            Collection<? extends AbstractValidationError> bypassableErrors = errorHandler.getBypassableErrors();
-            Collection<? extends AbstractValidationError> warnings = errorHandler.getWarnings();
+            Collection<? extends AbstractError> blockingErrors = errorHandler.getBlockingErrors();
+            Collection<? extends AbstractError> bypassableErrors = errorHandler.getBypassableErrors();
+            Collection<? extends AbstractError> warnings = errorHandler.getWarnings();
 
             List<BelcotaxValidationError> blockingErrorList = blockingErrors
                     .stream()
@@ -105,15 +107,12 @@ class Belcotax2021Validator {
         }
     }
 
-    private static BelcotaxValidationError convertError(Object o, Locale errorsLocale) {
-        AbstractValidationError validationError = (AbstractValidationError) o;
+    private static BelcotaxValidationError convertError(AbstractError abstractError, Locale errorsLocale) {
         Locale locale = Optional.ofNullable(errorsLocale)
                 .orElse(Locale.FRENCH);
-
-        BelcotaxValidationError belcotaxValidationError = new BelcotaxValidationError(
-                validationError.getErrorCode(),
-                validationError.render(locale, SourceType.XML)
+        return new BelcotaxValidationError(
+                abstractError.getErrorCode(),
+                abstractError.render(locale, true, SourceType.XML)
         );
-        return belcotaxValidationError;
     }
 }
