@@ -97,7 +97,7 @@ class Belcotax2022Validator {
             validatedBelcotax.setBlockingErrors(blockingErrorList);
             validatedBelcotax.setByPassableErrors(bypassableErrorsList);
             validatedBelcotax.setWarnings(warningsList);
-            validatedBelcotax.setFiscalYear(2021);
+            validatedBelcotax.setFiscalYear(2022);
 
             return validatedBelcotax;
         } catch (Exception e) {
