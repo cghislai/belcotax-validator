@@ -31,6 +31,9 @@ public class BelcotaxValidator {
             case 2021: {
                 return Belcotax2021Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
             }
+            case 2022: {
+                return Belcotax2022Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
+            }
             default:
                 throw new BelcotaxValidationException("Fiscal year " + fiscalYear + " not yet supported");
         }

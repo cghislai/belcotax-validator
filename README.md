@@ -63,3 +63,11 @@ if (blockingErrors.isEmpty()) {
 ```
 
 4. Upload the bow file on belcotax on web
+
+
+# Updating the validator
+
+1. Fetch the jnlp file
+2. Download the jar content. url='${codebase}/${jar_href}', eg 'http://ccff02.minfin.fgov.be/CCFF_SP7_2015/jnlp/belcotax-standalone-2022-1.0.5.jar'
+3. Install the jar in the local mvn repo: ` mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=path/to/belcotax-standalone-XXXX-Y.Y.jar -DgroupId=be.fgov.minfin.belcotax -DartifactId=belcotax-standalone-XXX -Dversion=XXX.Y.Y   -Dpackaging=jar -DlocalRepositoryPath=./repo `
+4. Create the new 'belcotax-XXX_valiation' module, shade the jar content, and update the validator 

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>belcotax-validator-parent</artifactId>
         <groupId>com.charlyghislain.belcotax</groupId>
-        <version>2022.0.2-SNAPSHOT</version>
+        <version>2023.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -26,8 +26,14 @@
         </dependency>
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
+            <artifactId>belcotax-2022-validation</artifactId>
+            <version>${project.version}</version>
+            <classifier>shaded</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.charlyghislain.belcotax</groupId>
             <artifactId>belcotax-validation-util</artifactId>
-            <version>2022.0.2-SNAPSHOT</version>
+            <version>2023.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
