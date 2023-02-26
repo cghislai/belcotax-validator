@@ -2,6 +2,8 @@
 
 This project contains the belcotax validator extracted from the standalone jws applet (*sigh*), packaged in a shaded jar.
 
+Note: relocations are disabled in this version, your classpath may be filled with the applet resources and dependencies.
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.charlyghislain.belcotax/belcotax-validator)](https://search.maven.org/search?q=g:com.charlyghislain.belcotax%20a:belcotax-validator)
 
 Supporting multiple fiscal year (with multiple jnlp versions embedded) does not work correctly, some files are loaded from the classpath using hardcoded urls.

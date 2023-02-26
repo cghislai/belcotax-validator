@@ -56,33 +56,33 @@
                                     <include>be.fgov.minfin.belcotax:*</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern></pattern>
-                                    <shadedPattern>belcotax2022/</shadedPattern>
-                                    <includes>
-                                        <include>be.**</include>
-                                        <include>bindings.**</include>
-                                        <include>netscape.**</include>
-                                        <include>org.**</include>
-                                        <include>schemas.**</include>
-                                        <include>sun.**</include>
-                                        <include>sunw.**</include>
-                                        <!--                                        <include>**.properties</include>-->
-                                        <!--                                        <include>**.xml</include>-->
-                                        <!--                                        <include>**.xsd</include>-->
-                                        <!--                                        <include>**.dtd</include>-->
-                                        <!--                                        <include>**.html</include>-->
-                                    </includes>
-                                    <excludes>
-                                        <exclude>org.xml.sax.**</exclude>
-                                        <!--                                        <exclude>\.properties</exclude>-->
-                                        <!--                                        <exclude>\.xsd</exclude>-->
-                                        <exclude>data.xml</exclude>
-                                        <exclude>statistic.properties</exclude>
-                                    </excludes>
-                                </relocation>
-                            </relocations>
+                            <!--                            <relocations>-->
+                            <!--                                <relocation>-->
+                            <!--                                    <pattern></pattern>-->
+                            <!--                                    <shadedPattern>belcotax2022/</shadedPattern>-->
+                            <!--                                    <includes>-->
+                            <!--                                        <include>be.**</include>-->
+                            <!--                                        <include>bindings.**</include>-->
+                            <!--                                        <include>netscape.**</include>-->
+                            <!--                                        <include>org.**</include>-->
+                            <!--                                        <include>schemas.**</include>-->
+                            <!--                                        <include>sun.**</include>-->
+                            <!--                                        <include>sunw.**</include>-->
+                            <!--                                        &lt;!&ndash;                                        <include>**.properties</include>&ndash;&gt;-->
+                            <!--                                        &lt;!&ndash;                                        <include>**.xml</include>&ndash;&gt;-->
+                            <!--                                        &lt;!&ndash;                                        <include>**.xsd</include>&ndash;&gt;-->
+                            <!--                                        &lt;!&ndash;                                        <include>**.dtd</include>&ndash;&gt;-->
+                            <!--                                        &lt;!&ndash;                                        <include>**.html</include>&ndash;&gt;-->
+                            <!--                                    </includes>-->
+                            <!--                                    <excludes>-->
+                            <!--                                        <exclude>org.xml.sax.**</exclude>-->
+                            <!--                                        <exclude>*.properties</exclude>-->
+                            <!--                                        <exclude>*.xsd</exclude>-->
+                            <!--                                        <exclude>data.xml</exclude>-->
+                            <!--                                        <exclude>statistic.properties</exclude>-->
+                            <!--                                    </excludes>-->
+                            <!--                                </relocation>-->
+                            <!--                            </relocations>-->
                             <filters>
                                 <filter>
                                     <artifact>be.fgov.minfin.belcotax:*</artifact>
@@ -96,10 +96,6 @@
                             </filters>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <file>be/fgov/minfin/ccff/belcotax/validation2/validator/resources/validator-rules.xml</file>
-                                    <resource>validator-rules.xml</resource>
-                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>
