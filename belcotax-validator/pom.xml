@@ -20,12 +20,6 @@
     <dependencies>
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
-            <artifactId>belcotax-2021-validation</artifactId>
-            <version>${project.version}</version>
-            <classifier>shaded</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.charlyghislain.belcotax</groupId>
             <artifactId>belcotax-2022-validation</artifactId>
             <version>${project.version}</version>
             <classifier>shaded</classifier>
@@ -42,38 +36,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <!--        <plugins>-->
-        <!--            <plugin>-->
-        <!--                <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                <artifactId>maven-shade-plugin</artifactId>-->
-        <!--                <version>3.3.0</version>-->
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <phase>package</phase>-->
-        <!--                        <goals>-->
-        <!--                            <goal>shade</goal>-->
-        <!--                        </goals>-->
-        <!--                        <configuration>-->
-        <!--                            <minimizeJar>true</minimizeJar>-->
-        <!--                            <createDependencyReducedPom>false</createDependencyReducedPom>-->
-        <!--                            <artifactSet>-->
-        <!--                                <excludes>-->
-        <!--                                    <exclude>be.fgov.minfin.belcotax:*</exclude>-->
-        <!--                                </excludes>-->
-        <!--                            </artifactSet>-->
-        <!--                            <filters>-->
-        <!--                                <filter>-->
-        <!--                                    <artifact>com.charlyghislain.belcotax:belcotax-validation-util</artifact>-->
-        <!--                                    <excludes>-->
-        <!--                                        <exclude>META-INF/*.MF</exclude>-->
-        <!--                                    </excludes>-->
-        <!--                                </filter>-->
-        <!--                            </filters>-->
-        <!--                        </configuration>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <!--            </plugin>-->
-        <!--        </plugins>-->
-    </build>
 </project>

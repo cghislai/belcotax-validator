@@ -28,9 +28,6 @@ public class BelcotaxValidator {
      */
     public static ValidatedBelcotax validateBelcotaxXml(int fiscalYear, InputStream xmlInputStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
         switch (fiscalYear) {
-            case 2021: {
-                return Belcotax2021Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
-            }
             case 2022: {
                 return Belcotax2022Validator.validatedBelcotaxXml(xmlInputStream, validationOptions);
             }
