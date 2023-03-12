@@ -17,6 +17,8 @@ import com.charlyghislain.belcotax.util.BelcotaxValidationError;
 import com.charlyghislain.belcotax.util.BelcotaxValidationException;
 import com.charlyghislain.belcotax.util.BelcotaxValidationOptions;
 import com.charlyghislain.belcotax.util.ValidatedBelcotax;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,9 +31,10 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-class Belcotax2022Validator {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Belcotax2022Validator {
 
-    public static ValidatedBelcotax validatedBelcotaxXml(InputStream xmlContentStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
+    public static ValidatedBelcotax validateBelcotaxXml(InputStream xmlContentStream, BelcotaxValidationOptions validationOptions) throws BelcotaxValidationException {
         try (
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 CryptOutputStream cryptOutputStream = new CryptOutputStream(outputStream);
@@ -101,7 +104,7 @@ class Belcotax2022Validator {
 
             return validatedBelcotax;
         } catch (Exception e) {
-            throw new BelcotaxValidationException(e);
+            throw new BelcotaxValidationException(e.getMessage(), e);
         }
     }
 

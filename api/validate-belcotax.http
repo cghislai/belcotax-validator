@@ -1,0 +1,6 @@
+POST {{apiUri}}/validate?maxBlocking=30
+Content-Type: text/xml
+Accept: application/json
+Accept-Language: fr
+
+< /home/cghislai/dl/xdg/attestations_281.86_2022%20(4).xml
