@@ -21,12 +21,17 @@
         <dependency>
             <groupId>be.fgov.minfin.belcotax</groupId>
             <artifactId>belcotax-standalone-2022</artifactId>
-            <version>2022.1.0</version>
+            <version>2022.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
             <artifactId>belcotax-validation-util</artifactId>
             <version>2023.1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -56,33 +61,6 @@
                                     <include>be.fgov.minfin.belcotax:*</include>
                                 </includes>
                             </artifactSet>
-                            <!--                            <relocations>-->
-                            <!--                                <relocation>-->
-                            <!--                                    <pattern></pattern>-->
-                            <!--                                    <shadedPattern>belcotax2022/</shadedPattern>-->
-                            <!--                                    <includes>-->
-                            <!--                                        <include>be.**</include>-->
-                            <!--                                        <include>bindings.**</include>-->
-                            <!--                                        <include>netscape.**</include>-->
-                            <!--                                        <include>org.**</include>-->
-                            <!--                                        <include>schemas.**</include>-->
-                            <!--                                        <include>sun.**</include>-->
-                            <!--                                        <include>sunw.**</include>-->
-                            <!--                                        &lt;!&ndash;                                        <include>**.properties</include>&ndash;&gt;-->
-                            <!--                                        &lt;!&ndash;                                        <include>**.xml</include>&ndash;&gt;-->
-                            <!--                                        &lt;!&ndash;                                        <include>**.xsd</include>&ndash;&gt;-->
-                            <!--                                        &lt;!&ndash;                                        <include>**.dtd</include>&ndash;&gt;-->
-                            <!--                                        &lt;!&ndash;                                        <include>**.html</include>&ndash;&gt;-->
-                            <!--                                    </includes>-->
-                            <!--                                    <excludes>-->
-                            <!--                                        <exclude>org.xml.sax.**</exclude>-->
-                            <!--                                        <exclude>*.properties</exclude>-->
-                            <!--                                        <exclude>*.xsd</exclude>-->
-                            <!--                                        <exclude>data.xml</exclude>-->
-                            <!--                                        <exclude>statistic.properties</exclude>-->
-                            <!--                                    </excludes>-->
-                            <!--                                </relocation>-->
-                            <!--                            </relocations>-->
                             <filters>
                                 <filter>
                                     <artifact>be.fgov.minfin.belcotax:*</artifact>

@@ -10,8 +10,8 @@
     <version>2023.1.2-SNAPSHOT</version>
     <modules>
         <module>belcotax-2022-validation</module>
-        <module>belcotax-validator</module>
         <module>belcotax-validation-util</module>
+        <module>belcotax-validator-rest</module>
     </modules>
 
     <properties>

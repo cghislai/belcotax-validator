@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  ws:
+    #image: cghislai/belcotax-validator:2023.1.2-SNAPSHOT
+    build:
+      context: ./belcotax-validator-rest
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - 28080:8080
+      - 28443:8080
