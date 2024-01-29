@@ -5,6 +5,8 @@ and bundled in a quarkus server proxifying it through a rest api.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.charlyghislain.belcotax/belcotax-validator)](https://search.maven.org/search?q=g:com.charlyghislain.belcotax%20a:belcotax-validator)
 
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/cghislai/belcotax-validator?label=Docker%20image&link=https%3A%2F%2Fgithub.com%2Fusers%2Fcghislai%2Fpackages%2Fcontainer%2Fpackage%2Fbelcotax-validator)](https://github.com/users/cghislai/packages/container/package/belcotax-validator)
+
 
 Supporting multiple fiscal year (with multiple jnlp versions embedded) does not work correctly, some files are loaded from the classpath using hardcoded urls.
 The aim is to update this project to support validating the last fiscal year for which the validator is released. Feel free to open an issue whenever a new 'validation module' is released on financien.belgium.be.
