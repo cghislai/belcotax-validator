@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>2023.1.2-SNAPSHOT</version>
     <modules>
-        <module>belcotax-2022-validation</module>
+        <module>belcotax-2023-validation</module>
         <module>belcotax-validation-util</module>
         <module>belcotax-validator-rest</module>
     </modules>

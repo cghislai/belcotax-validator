@@ -90,7 +90,7 @@
         </dependency>
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
-            <artifactId>belcotax-2022-validation</artifactId>
+            <artifactId>belcotax-2023-validation</artifactId>
             <version>${project.version}</version>
             <classifier>shaded</classifier>
         </dependency>
