@@ -7,7 +7,7 @@
     <groupId>com.charlyghislain.belcotax</groupId>
     <artifactId>belcotax-validator-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2023.1.2-SNAPSHOT</version>
+    <version>2024.1.1</version>
     <modules>
         <module>belcotax-2023-validation</module>
         <module>belcotax-validation-util</module>
