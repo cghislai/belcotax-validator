@@ -6,6 +6,10 @@ services:
     build:
       context: ./belcotax-validator-rest
       dockerfile: src/main/docker/Dockerfile.jvm
+    environment:
+      - JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+      - QUARKUS_PROFILE=dev
     ports:
       - 28080:8080
       - 28443:8080
+      - 5005:5005
