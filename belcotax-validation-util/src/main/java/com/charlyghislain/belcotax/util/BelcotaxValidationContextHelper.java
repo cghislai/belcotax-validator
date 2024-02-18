@@ -27,8 +27,9 @@ public class BelcotaxValidationContextHelper {
         ErrorMessageContext errorMessageContext = new ErrorMessageContext(errorMessage);
         int line = errorMessageContext.getLine();
         int column = errorMessageContext.getColumn();
+        Map<String, String> tags = Optional.ofNullable(errorMessageContext.getTags()).orElse(Map.of());
         String message = errorMessageContext.getMessage();
-        String tagValue = errorMessageContext.getTags().get(TAG_TAG);
+        String tagValue = tags.get(TAG_TAG);
         String contentMessage = extractContentMessage(contentLineList, line, tagValue, column);
         String elementDocumentation = getElementDocumentation(tagValue, xsdDocumentation, locale);
 
