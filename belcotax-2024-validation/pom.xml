@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.charlyghislain.belcotax</groupId>
         <artifactId>belcotax-validator-parent</artifactId>
-        <version>2024.1.3-SNAPSHOT</version>
+        <version>2025.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>belcotax-2024-validation</artifactId>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
             <artifactId>belcotax-validation-util</artifactId>
-            <version>2024.1.3-SNAPSHOT</version>
+            <version>2025.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
