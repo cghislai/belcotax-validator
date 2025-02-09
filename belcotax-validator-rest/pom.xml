@@ -90,7 +90,7 @@
         </dependency>
         <dependency>
             <groupId>com.charlyghislain.belcotax</groupId>
-            <artifactId>belcotax-2023-validation</artifactId>
+            <artifactId>belcotax-2024-validation</artifactId>
             <version>${project.version}</version>
             <classifier>shaded</classifier>
         </dependency>
@@ -163,7 +163,7 @@
                 <version>2.16.4.Final</version>
                 <configuration>
                     <parentFirstArtifacts>
-                        <parentFirstArtifact>com.charlyghislain.belcotax:belcotax-2022-validation</parentFirstArtifact>
+                        <parentFirstArtifact>com.charlyghislain.belcotax:belcotax-2024-validation</parentFirstArtifact>
                     </parentFirstArtifacts>
                 </configuration>
             </plugin>

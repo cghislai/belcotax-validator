@@ -1,6 +1,6 @@
 package com.charlyghislain.belcotax.validator.rest;
 
-import com.charlyghislain.belcotax.Belcotax2023Validator;
+import com.charlyghislain.belcotax.Belcotax2024Validator;
 import com.charlyghislain.belcotax.util.BelcotaxValidationError;
 import com.charlyghislain.belcotax.util.BelcotaxValidationException;
 import com.charlyghislain.belcotax.util.BelcotaxValidationOptions;
@@ -35,7 +35,7 @@ public class ValidationResource implements ValidationApi {
                 .ifPresent(optionsBuilder::maxBlockingErrors);
         try {
             byte[] xmlBytes = xmlContent.readAllBytes();
-            ValidatedBelcotax validatedBelcotax = Belcotax2023Validator.validateBelcotaxXml(new ByteArrayInputStream(xmlBytes), optionsBuilder.build());
+            ValidatedBelcotax validatedBelcotax = Belcotax2024Validator.validateBelcotaxXml(new ByteArrayInputStream(xmlBytes), optionsBuilder.build());
 
             BelcotaxValidationResults belcotaxValidationResults = new BelcotaxValidationResults();
             belcotaxValidationResults.setFiscalYear(validatedBelcotax.getFiscalYear());
@@ -65,7 +65,7 @@ public class ValidationResource implements ValidationApi {
         Optional.ofNullable(maxBlockingErrors)
                 .ifPresent(optionsBuilder::maxBlockingErrors);
         try {
-            ValidatedBelcotax validatedBelcotax = Belcotax2023Validator.validateBelcotaxXml(xmlContent, optionsBuilder.build());
+            ValidatedBelcotax validatedBelcotax = Belcotax2024Validator.validateBelcotaxXml(xmlContent, optionsBuilder.build());
             return validatedBelcotax.getBowInputStream();
         } catch (BelcotaxValidationException e) {
             throw new InternalServerErrorException(e);
