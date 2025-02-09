@@ -26,7 +26,7 @@ pipeline {
                     }
                 }
                 container('docker') {
-                    withMaven(maven: 'maven', mavenSettingsConfig: 'nexus-mvn-settings') {
+                    withMaven(maven: 'maven', mavenSettingsConfig: 'ossrh-cghislai-settings-xml') {
                         sh "mvn ${env.MVN_ARGS} -DskipTests=${params.SKIP_TESTS} clean compile install"
                     }
                 }
