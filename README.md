@@ -68,18 +68,18 @@ Content-Type: application/json;charset=UTF-8
 4. Create the new 'belcotax-XXX_valiation' module, shade the jar content, and update the validator 
 
 ```bash
- JNLP_URI="https://ccff02.minfin.fgov.be/CCFF_SP7_2022/jnlp/belcotax.jnlp"
- BASE_PATH=$(curl "$JNLP_URI" | xmllint --xpath '//jnlp/@codebase' - | sed 's/^[^=]\+=//' | jq -r)
-  JAR_HREF=$(curl "$JNLP_URI" | xmllint --xpath '//jnlp/resources/jar/@href'  - | sed 's/^[^=]\+=//' | jq -r)
+`JNLP_URI="https://ccff02.minfin.fgov.be/CCFF_SP7_2025/jnlp/belcotax.jnlp"
+BASE_PATH=$(curl "$JNLP_URI" | xmllint --xpath '//jnlp/@codebase' - | sed 's/^[^=]\+=//' | jq -r)
+JAR_HREF=$(curl "$JNLP_URI" | xmllint --xpath '//jnlp/resources/jar/@href'  - | sed 's/^[^=]\+=//' | jq -r)
  
- JAR_URI="$BASE_PATH/$JAR_HREF"
- echo $JAR_URI
- exit 1
- curl $JAR_URI > belcotax-standalone.jar
+JAR_URI="$BASE_PATH/$JAR_HREF"
+echo $JAR_URI
+#exit 1
+curl $JAR_URI > belcotax-standalone.jar`
  
- mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=belcotax-standalone.jar -DgroupId=be.fgov.minfin.belcotax -DartifactId=belcotax-standalone-2022 -Dversion=2022.2.0   -Dpackaging=jar -DlocalRepositoryPath=./repo
+mvn org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file -Dfile=belcotax-standalone.jar -DgroupId=be.fgov.minfin.belcotax -DartifactId=belcotax-standalone-2025 -Dversion=2025.0.0   -Dpackaging=jar -DlocalRepositoryPath=./repo
  
- rm -f belcotax-standalone.jar
+rm -f belcotax-standalone.jar
 ```
 
 ```bash
@@ -88,7 +88,6 @@ curl https://financien.belgium.be/sites/default/files/downloads/161-xsd-2022-202
 unzip xsd.zip
 
 cp -f Belcotax-2022.xsd belcotax-2022-validation/src/main/resources/xsd/
-rm -f 
 rm xsd.zip 
 rm -f Belcotax-2022.xsd 
 ```
