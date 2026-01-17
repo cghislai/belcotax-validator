@@ -56,7 +56,7 @@ pipeline {
             when {
                 anyOf {
                     environment name: 'BRANCH_NAME', value: 'master'
-                    environment name: 'BRANCH_NAME', value: 'rc'
+                    environment name: 'BRANCH_NAME', value: 'dev'
                     expression { return params.FORCE_DEPLOY == true }
                 }
             }
