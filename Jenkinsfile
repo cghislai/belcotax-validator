@@ -1,70 +1,93 @@
 pipeline {
     agent {
-            label 'docker'
+        kubernetes {
+            inheritFrom 'docker helm maven'
+            label 'belcotax-validator-build'
+            defaultContainer 'maven'
+        }
     }
     parameters {
         booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip tests')
-        booleanParam(name: 'SKIP_PUBLISH', defaultValue: false, description: 'Skip publishing archive')
-        string(name: 'ALT_DEPLOYMENT_REPOSITORY', defaultValue: '', description: 'Alternative deployment repo')
-        string(name: 'GPG_KEY_CREDENTIAL_ID', defaultValue: 'jenkins-jenkins-charlyghislain-maven-deploy-gpg-key',
-         description: 'Credential containing the private gpg key (pem)')
-        string(name: 'GPG_KEY_FINGERPRINT', defaultValue: '508608F6CF097B4746CB291B5B72FDC1FF81F9ED',
-         description: 'The fingerprint of this key to add to trust root')
-        string(name: 'DOCKER_REPO', defaultValue: 'ghcr.io/cghislai', description: 'Docker repo')
+        booleanParam(name: 'FORCE_DEPLOY', defaultValue: false, description: 'Force deploy ')
+        credentials(
+                name: 'MAVEN_CREDENTIALS', defaultValue: 'jenkins-mavensettings-secrets', description: 'maven settings.xml',
+                credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.FileCredentialsImpl'
+        )
+        string(
+                name: 'IMAGE', defaultValue: 'belcotax-validator', description: 'Image to push'
+        )
+        string(
+                name: 'DOCKER_REPO', defaultValue: 'ghcr.io/cghislai', description: 'Repo to push'
+        )
+        credentials(
+                name: 'DOCKER_CREDENTIALS', defaultValue: 'jenkins-dockerconfigjson-secrets', description: 'docker config.json',
+                credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.FileCredentialsImpl'
+        )
     }
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     stages {
-        stage ('Build') {
+        stage('Maven build') {
             steps {
-                script {
-                    env.MVN_ARGS="-Dquarkus.container-image.build=false"
-                    if (params.ALT_DEPLOYMENT_REPOSITORY != '') {
-                        env.MVN_ARGS="${env.MVN_ARGS} -DaltDeploymentRepository=${params.ALT_DEPLOYMENT_REPOSITORY}"
+                container('maven') {
+                    script {
+                        env.MVN_ARGS = "-Dquarkus.container-image.build=false"
+                        if (params.SKIP_TESTS == true) {
+                            env.MVN_ARGS += " -DskipTests=${params.SKIP_TESTS}"
+                        }
+                        env.MVN_PHASE = "package"
                     }
-                }
-                container('docker') {
-                    withMaven(maven: 'maven', mavenSettingsConfig: 'ossrh-cghislai-settings-xml') {
-                        sh "mvn ${env.MVN_ARGS} -DskipTests=${params.SKIP_TESTS} clean compile install"
+                    withCredentials([file(credentialsId: params.MAVEN_CREDENTIALS, variable: 'MAVEN_SETTINGS_XML')]) {
+                        sh '''
+                          mkdir -p ~/.m2
+                          cp $MAVEN_SETTINGS_XML ~/.m2/settings.xml
+                          
+                          VERSION="$(JENKINS_MAVEN_AGENT_DISABLED=true mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n1)"
+                          mvn $MVN_ARGS clean $MVN_PHASE
+                          echo "$VERSION" > .version
+                        '''
                     }
                 }
             }
         }
-        stage ('Publish') {
-            when { anyOf {
-                expression { return params.SKIP_PUBLISH != true }
-            } }
-            steps {
-                script {
-                    env.MVN_ARGS="-Dquarkus.container-image.build=false"
-                    env.MVN_ARGS="${env.MVN_ARGS} -DskipTests=true -Possrh-deploy"
-
-                    if (params.ALT_DEPLOYMENT_REPOSITORY != '') {
-                        env.MVN_ARGS="${env.MVN_ARGS} -DaltDeploymentRepository=${params.ALT_DEPLOYMENT_REPOSITORY}"
-                    }
-                    if (env.BRANCH_NAME == 'master') {
-                        env.MVN_ARGS="${env.MVN_ARGS}"
-                    }
+        stage('Docker image') {
+            when {
+                anyOf {
+                    environment name: 'BRANCH_NAME', value: 'master'
+                    environment name: 'BRANCH_NAME', value: 'rc'
+                    expression { return params.FORCE_DEPLOY == true }
                 }
+            }
+            steps {
                 container('docker') {
-                    withCredentials([file(credentialsId: "${params.GPG_KEY_CREDENTIAL_ID}", variable: 'GPGKEY')]) {
-                        sh 'gpg --batch --allow-secret-key-import --import $GPGKEY'
-                        sh "echo \"${params.GPG_KEY_FINGERPRINT}:6:\" | gpg --batch --import-ownertrust"
-                    }
-                    withMaven(maven: 'maven', mavenSettingsConfig: 'ossrh-cghislai-settings-xml', jdk: 'jdk11') {
-                        sh "mvn deploy $MVN_ARGS"
-                        script {
-                            VERSION = sh(script: 'JENKINS_MAVEN_AGENT_DISABLED=true mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n1', returnStdout: true).trim()
+                    script {
+                        env.VERSION = sh(script: 'head -n1 .version', returnStdout: true).trim()
+                        env.DOCKER_IMAGE_TAG = env.VERSION
+                        if (env.BRANCH_NAME != "master") {
+                            def shortCommit = env.GIT_COMMIT.take(7)
+                            env.DOCKER_IMAGE_TAG = "${env.VERSION}-${shortCommit}"
                         }
+                        env.IMAGE_NAME = "${params.DOCKER_REPO}/${params.IMAGE}:${env.DOCKER_IMAGE_TAG}"
+                        env.LATEST_IMAGE_NAME = "${params.DOCKER_REPO}/${params.IMAGE}:latest"
                     }
-                    dir('belcotax-validator-rest') {
-                        script {
-                            def image = docker.build("${params.DOCKER_REPO}/belcotax-validator:${VERSION}", "-f src/main/docker/Dockerfile.jvm .")
-                            image.push()
-                            image.push("${BRANCH_NAME}-latest")
-                        }
+                    withCredentials([file(credentialsId: params.DOCKER_CREDENTIALS, variable: 'DOCKER_CONFIG_JSON')]) {
+                        sh '''
+                          mkdir -p ~/.docker
+                          cp $DOCKER_CONFIG_JSON ~/.docker/config.json
+            
+                          docker buildx build --load -t "$IMAGE_NAME" \
+                            --label "org.opencontainers.image.created=$(date -Iseconds)" \
+                            --label "org.opencontainers.image.source=$GIT_URL" \
+                            --label "org.opencontainers.image.version=$VERSION" \
+                            --label "org.opencontainers.image.revision=$GIT_COMMIT" \
+                            .
+                          docker push "$IMAGE_NAME"
+            
+                          docker tag "$IMAGE_NAME" "$LATEST_IMAGE_NAME"
+                          docker push "$LATEST_IMAGE_NAME"
+                        '''
                     }
                 }
             }
