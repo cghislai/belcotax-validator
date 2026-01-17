@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            inheritFrom 'docker helm maven'
+            inheritFrom 'docker helm maven-jdk11'
             label 'belcotax-validator-build'
             defaultContainer 'maven'
         }
