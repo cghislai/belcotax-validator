@@ -87,7 +87,7 @@ pipeline {
                               docker push "$IMAGE_NAME"
                 
                               docker tag "$IMAGE_NAME" "$LATEST_IMAGE_NAME"
-                              docker push "$LATEST_IMAGE_NAME"
+                              [ "$BRANCH_NAME" = "master" ] && docker push "$LATEST_IMAGE_NAME" || echo 'Skipping push'
                             '''
                         }
                     }
