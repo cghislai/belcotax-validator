@@ -73,21 +73,23 @@ pipeline {
                         env.LATEST_IMAGE_NAME = "${params.DOCKER_REPO}/${params.IMAGE}:latest"
                     }
                     withCredentials([file(credentialsId: params.DOCKER_CREDENTIALS, variable: 'DOCKER_CONFIG_JSON')]) {
-                        sh '''
-                          mkdir -p ~/.docker
-                          cp $DOCKER_CONFIG_JSON ~/.docker/config.json
-            
-                          docker buildx build --load -t "$IMAGE_NAME" \
-                            --label "org.opencontainers.image.created=$(date -Iseconds)" \
-                            --label "org.opencontainers.image.source=$GIT_URL" \
-                            --label "org.opencontainers.image.version=$VERSION" \
-                            --label "org.opencontainers.image.revision=$GIT_COMMIT" \
-                            .
-                          docker push "$IMAGE_NAME"
-            
-                          docker tag "$IMAGE_NAME" "$LATEST_IMAGE_NAME"
-                          docker push "$LATEST_IMAGE_NAME"
-                        '''
+                        dir('belcotax-validator-rest') {
+                            sh '''
+                              mkdir -p ~/.docker
+                              cp $DOCKER_CONFIG_JSON ~/.docker/config.json
+                
+                              docker buildx build -f src/main/docker/Dockerfile.jvm --load -t "$IMAGE_NAME" \
+                                --label "org.opencontainers.image.created=$(date -Iseconds)" \
+                                --label "org.opencontainers.image.source=$GIT_URL" \
+                                --label "org.opencontainers.image.version=$VERSION" \
+                                --label "org.opencontainers.image.revision=$GIT_COMMIT" \
+                                .
+                              docker push "$IMAGE_NAME"
+                
+                              docker tag "$IMAGE_NAME" "$LATEST_IMAGE_NAME"
+                              docker push "$LATEST_IMAGE_NAME"
+                            '''
+                        }
                     }
                 }
             }
